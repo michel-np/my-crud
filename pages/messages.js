@@ -13,6 +13,7 @@ import {
   getMessages,
   updateMessage,
   addMessage,
+  deleteMessage
 } from "../src/providers/messageProvider";
 
 const Messages = (props) => {
@@ -22,26 +23,13 @@ const Messages = (props) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const deleteItem = async (id) => {
-    await fetch("http://localhost:6005/api/message/delete-message/" + id, {
-      method: "POST",
-    });
-    let currentMessages = await fetch(
-      "http://localhost:6005/api/message/get-messages",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          collection: "messages",
-        }),
-      }
-    ).then((res) => res.json());
+  const handleDelete = async (id) => {
+    await deleteMessage(id);
+    let currentMessages = await getMessages().then(res => res.data);
     setMessages(currentMessages);
   };
 
-  const editMessage = (message) => {
+  const handleEditMessage = (message) => {
     setTitle(message.messageTitle);
     setBody(message.messageBody);
     setisEdditing(true);
@@ -150,10 +138,10 @@ const Messages = (props) => {
                   primary={String(message.messageTitle)}
                   secondary={message.messageBody}
                 />
-                <IconButton onClick={() => deleteItem(message._id)}>
+                <IconButton onClick={() => handleDelete(message._id)}>
                   <DeleteIcon />
                 </IconButton>
-                <IconButton onClick={() => editMessage(message)}>
+                <IconButton onClick={() => handleEditMessage(message)}>
                   <EditIcon />
                 </IconButton>
               </ListItem>
