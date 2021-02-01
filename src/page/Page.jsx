@@ -14,10 +14,12 @@ import SearchIcon from "@material-ui/icons/Search";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import HomeIcon from '@material-ui/icons/Home';
+
 
 const Page = ({ component }) => {
   const [drawerStatus, setDrawerStatus] = useState(false);
-
+  const router = useRouter();
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -29,23 +31,29 @@ const Page = ({ component }) => {
 
   return (<>
   
-    <div style={{ marginTop: "70px" }}>
+    <div style={{ marginTop: "63px" }}>
       <AppBar>
         <Toolbar>
           <Grid container justify="space-between">
             <Grid item>
-              <Link href="/">
-                <Typography>Home</Typography>
-              </Link>
+              <IconButton onClick={() => router.push('/')}>
+              <HomeIcon style={{color:'white', fontSize:30}} />
+              </IconButton>
             </Grid>
             <Grid item>
-              <Button onClick={toggleDrawer(true)}>Menu</Button>
+              <IconButton onClick={toggleDrawer(true)}>
+                <MenuIcon style={{color:'white'}}/>
+              </IconButton>
             </Grid>
           </Grid>
           <Drawer anchor={'right'} open={drawerStatus} onClose={toggleDrawer(false)}>
             <div style={{width:250, height:'100%', display:'flex', flexDirection:'column', padding:'10%',backgroundColor:'#333333'}}>
-              {['Messages', 'My Account', 'Log out'].map((text, index) => (
-              <Typography style={{padding:'10px 0px', color:'#f2f2f2'}}> {text}</Typography>
+              {[{label:'Messages', route:'/messages'}, {label:'On the works', route:''}, {label:'On the works', route:''}].map((text) => (
+              <div onClick={toggleDrawer(false)}>
+                <Link href={text.route}>
+                <Typography style={{padding:'10px 0px', color:'#f2f2f2'}}> {text.label}</Typography>
+              </Link>
+              </div>
             ))}
             </div>
           </Drawer>
