@@ -18,3 +18,7 @@ export const updateMessage = (obj) => {
 export const addMessage = (obj) => {
     return axiosMyProvider.post("/message/add-message", { ...obj, 'collection': 'messages' }, config);
 }
+
+export const deleteMessage = (obj) => {
+    return axiosMyProvider.post("/message/delete-message" + req.params.id, { ...obj, 'collection': 'messages' }, config);
+}
