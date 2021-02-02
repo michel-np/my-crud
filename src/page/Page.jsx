@@ -49,10 +49,10 @@ const Page = ({ component }) => {
           <Drawer anchor={'right'} open={drawerStatus} onClose={toggleDrawer(false)}>
             <div style={{width:250, height:'100%', display:'flex', flexDirection:'column', padding:'10%',backgroundColor:'#333333'}}>
               {[{label:'Messages', route:'/messages'}, {label:'On the works', route:''}, {label:'On the works', route:''}].map((text) => (
-              <div onClick={toggleDrawer(false)}>
-                <Link href={text.route}>
+              <div  onClick={toggleDrawer(false)}>
+                <a style={{textDecoration:'none'}} href={text.route}>
                 <Typography style={{padding:'10px 0px', color:'#f2f2f2'}}> {text.label}</Typography>
-              </Link>
+              </a>
               </div>
             ))}
             </div>
